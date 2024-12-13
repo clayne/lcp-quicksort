@@ -13,7 +13,7 @@ void dumpitems( unsigned char * s[], int n) {
   //  printf("\n----\n\n");
 }
 
-unsigned char ** readitems( unsigned char *fname, int *pn ) {
+unsigned char ** readitems( char *fname, int *pn ) {
     int n=0;
     unsigned char **s = NULL;
     FILE * fd = fopen(fname, "r");
@@ -23,14 +23,14 @@ unsigned char ** readitems( unsigned char *fname, int *pn ) {
       int nalloc = 1<<16;
       s=(unsigned char **) calloc(sizeof(unsigned char *), nalloc);
 
-      unsigned char buf[32000];
+      char buf[32000];
       while( fgets(buf, 32000, fd) ) {
 	if( n >= nalloc ) {
 	  nalloc <<=1;
 	  s = (unsigned char **) realloc( s, sizeof(unsigned char *) * nalloc);
 	}
         
-	s[n++] = strdup(buf);
+	s[n++] = (unsigned char *) strdup(buf);
 
       }
     }
